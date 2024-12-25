@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Complete Website Layout</title>
+	<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+	<div class="container-fluid">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Home</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<!--- Image Slider -->
+<div id="slides" class="carousel slide" data-ride="carousel" data-aos="fade-up"
+		data-aos-offset="200"
+		data-aos-delay="50"
+		data-aos-duration="1000">
+	<ul class="carousel-indicators">
+		<li data-target="#slides" data-slide-to="0" class="active"></li>
+		<li data-target="#slides" data-slide-to="1"></li>
+		<li data-target="#slides" data-slide-to="2"></li>
+	</ul>
+	<div class="carousel-inner">
+		<div class="carousel-item active">
+			<img class="image" src="bg.jpg">
+			<div class="carousel-caption">
+				<h1 class="display-2" style="text-align: right;">2025</h1>
+				<h3 style="text-align: right;">Cheers to Celebrating 2025!</h3>
+			</div>
+		</div>
+		<div class="carousel-item">
+			<img class="image" src="bg1.jpg">
+		</div>
+		<div class="carousel-item">
+			<img class="image" src="bg3.jpg">
+		</div>
+	</div>
+</div>
+
+<!--- Three Column Section -->
+<div class="container-fluid padding" data-aos="fade-up"
+		data-aos-offset="200"
+		data-aos-delay="50"
+		data-aos-duration="1000">
+	<div class="row text-center padding">
+		<div class="col-xs-12 col-sm-6 col-md-4">
+			<i class="fas fa-male fa-5x"></i>
+			<h3>Personal</h3>
+			<p>I appreciate you</p>
+			<!-- Button updated with JavaScript for password validation -->
+			<button id="personalBtn" class="btn btn-primary">Go to Personal</button>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4">
+			<i class="fas fa-users fa-5x"></i>
+			<h3>Family 1</h3>
+			<p>Thanks to your family for everything. I appreciate you all!</p>
+			<!-- Button updated with JavaScript for password validation -->
+			<button id="family1Btn" class="btn btn-primary">Go to Family 1</button>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<i class="fas fa-play fa-5x"></i>
+			<h3>Family 2</h3>
+			<p>Thanks to my family for everything. I appreciate you all!</p>
+			<!-- Button updated with JavaScript for password validation -->
+			<button id="family2Btn" class="btn btn-primary">Go to Family 2</button>
+		</div>
+	</div>
+	<hr class="my-4">
+</div>
+
+<hr class="my-4">
+
+<!-- JavaScript for Password Authentication -->
+<script>
+    // Add an event listener to the "Go to Personal" button
+    document.getElementById('personalBtn').addEventListener('click', function() {
+        // Prompt user for password
+        var password = prompt('The anniversary date (A.D.):');
+        
+        // Define the correct password (replace 'yourPassword' with the actual password you want)
+        var correctPassword = '01012022'; // Update this password
+
+        // Check if the entered password is correct
+        if (password === correctPassword) {
+            // Redirect to 'personal.html' if the password is correct
+            window.location.href = 'personal.html';
+        } else {
+            // Show an alert if the password is incorrect
+            alert('Incorrect password!');
+        }
+    });
+</script>
+
+<script>
+    // Add an event listener to the "Go to Personal" button
+    document.getElementById('family1Btn').addEventListener('click', function() {
+        // Prompt user for password
+        var password = prompt('Your birthday (A.D.):');
+        
+        // Define the correct password (replace 'yourPassword' with the actual password you want)
+        var correctPassword = '14062000'; // Update this password
+
+        // Check if the entered password is correct
+        if (password === correctPassword) {
+            // Redirect to 'personal.html' if the password is correct
+            window.location.href = 'family.html';
+        } else {
+            // Show an alert if the password is incorrect
+            alert('Incorrect password!');
+        }
+    });
+</script>
+
+<script>
+    // Add an event listener to the "Go to Personal" button
+    document.getElementById('family2Btn').addEventListener('click', function() {
+        // Prompt user for password
+        var password = prompt('The housewarming date (A.D.):');
+        
+        // Define the correct password (replace 'yourPassword' with the actual password you want)
+        var correctPassword = '06012006'; // Update this password
+
+        // Check if the entered password is correct
+        if (password === correctPassword) {
+            // Redirect to 'personal.html' if the password is correct
+            window.location.href = 'recap.html';
+        } else {
+            // Show an alert if the password is incorrect
+            alert('Incorrect password!');
+        }
+    });
+</script>
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>New Year Movie Website</title>
+    <style>
+        /* General reset for margin, padding */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            color: #fff; /* White text */
+            overflow-x: hidden;
+            background-color: #000; /* Black background for contrast */
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            background: url('new-year-fireworks.jpg') no-repeat center center fixed; /* New Year fireworks image */
+            background-size: cover;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .hero h1 {
+            font-size: 50px;
+            margin: 0;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin: 10px 0;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-button {
+            background-color: #ff6f61;
+            padding: 15px 25px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #ff4e46;
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+        }
+
+        nav ul {
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            list-style: none;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ff6f61;
+        }
+        
+
+        /* Movie Gallery Section */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 40px;
+            margin-top: -50px; /* Makes the gallery appear right below the hero section */
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1); /* Zoom effect */
+        }
+
+        .gallery-item:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); /* Shadow effect */
+        }
+
+        .movie-title {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Modal for Image Preview */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            animation: modalAnimation 0.5s ease;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Modal open animation */
+        @keyframes modalAnimation {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Movies</a></li>
+            <li><a href="#">New Releases</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Welcome to the New Year Gallery</h1>
+        <p>I wish for everyone in your family 
+            to be soon in 2025 or the following years, taking 
+            each step with care and mindfulness. I also wish for everyone's 
+            success, with the hope that we will always help each other. I have 
+            nothing more to wish for, but I will watch over everyone's success with good wishes.</p>
+        <button class="cta-button">Explore More</button>
+    </div>
+
+    <!-- Movie Gallery Section -->
+    <div class="gallery" id="gallery">
+        <!-- Movie items will be dynamically added here -->
+    </div>
+
+    <!-- Modal for lightbox effect -->
+    <div id="myModal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal(event)">&times;</span>
+        <img id="modalImage" src="" alt="">
+    </div>
+
+    <script>
+        // List of movie images to add to the gallery
+        const movieList = [
+        { src: 'img/465123026_2572732582912507_3914807089504870041_n.jpg'},
+            { src: 'img/468785788_2938515806304997_3014101076543025072_n.jpg'},
+            { src: 'img/468833618_2938515746305003_6035157955041280496_n.jpg'},
+            { src: 'img/468862121_2938515712971673_1982928125150775328_n.jpg'},
+            { src: 'img/468882808_2938515569638354_1613568544747239632_n.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_5.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_11.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_12.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_14.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_15.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_16.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_17.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_18.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_19.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_20.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_21.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_22.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_23.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_24.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_25.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_26.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_27.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_28.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_29.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_31.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_35.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_36.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_37.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_38.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_39.jpg'},
+            { src: 'img/LINE_ALBUM_131224_241213_40.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_1.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_2.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_3.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_4.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_5.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_6.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_7.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_8.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_9.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_10.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_11.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_12.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_13.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_14.jpg'},
+            { src: 'img/LINE_ALBUM_141224_241214_15.jpg'},
+            // Add more images as needed
+        ];
+
+        // Function to dynamically add movie posters to the gallery
+        function loadGallery() {
+            const gallery = document.getElementById("gallery");
+
+            movieList.forEach(movie => {
+                const galleryItem = document.createElement("div");
+                galleryItem.classList.add("gallery-item");
+                galleryItem.onclick = function() { openModal(galleryItem) };
+
+                const img = document.createElement("img");
+                img.src = movie.src;
+                img.alt = movie.title;
+                galleryItem.appendChild(img);
+
+                const title = document.createElement("div");
+                title.classList.add("movie-title");
+                title.textContent = movie.title;
+                galleryItem.appendChild(title);
+
+                gallery.appendChild(galleryItem);
+            });
+        }
+
+        // Function to open the modal and show the clicked movie image
+        function openModal(element) {
+            var modal = document.getElementById("myModal");
+            var modalImage = document.getElementById("modalImage");
+            modal.style.display = "flex";  // Show the modal
+            modalImage.src = element.querySelector("img").src;  // Set the modal image source
+        }
+
+        // Function to close the modal
+        function closeModal(event) {
+            var modal = document.getElementById("myModal");
+            if (event.target === modal || event.target.classList.contains("close")) {
+                modal.style.display = "none";  // Hide the modal
+            }
+        }
+
+        // Load the movie gallery dynamically when the page loads
+        window.onload = loadGallery;
+    </script>
+
+    <!-- Video Section -->
+    <div class="video-container">
+        <video width="100%" controls>
+            <source src="img/Sequence 01.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+     <!-- Background Music -->
+    <audio autoplay loop controls>
+        <source src="โกดำ.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+</body>
+</html>

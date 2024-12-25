@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Image Collection</title>
+  
+  <style>
+    /* General Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    h1, p {
+      text-align: center;
+      opacity: 0; /* Initially hidden for animation */
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards;
+    }
+
+    h1 {
+      animation-delay: 0.5s;
+    }
+
+    p {
+      animation-delay: 1s;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background-color: #333;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 30px;
+      opacity: 0;
+      transform: translateY(-50px);
+      animation: slideDown 1s forwards;
+      animation-delay: 0.2s;
+    }
+
+    .navbar .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .navbar .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar .nav-links li {
+      display: inline;
+    }
+
+    .navbar .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.2em;
+      transition: color 0.3s;
+    }
+
+    .navbar .nav-links a:hover {
+      color: #f4f4f4;
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    /* Image Item */
+    .image-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeInUp 1s forwards;
+    }
+
+    /* Make sure all images have a fixed size */
+    .image-item img {
+      width: 100%; /* Makes the image span the full width of the container */
+      height: 200px; /* Set a fixed height */
+      object-fit: cover; /* Ensures images are cropped to fit the container */
+      transition: transform 0.3s ease-in-out;
+      cursor: pointer; /* Makes the image look clickable */
+    }
+
+    .image-item:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Image Fade-In on Scroll */
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Navbar Slide Animation */
+    @keyframes slideDown {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Footer Styles */
+    .footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      opacity: 0;
+      transform: translateY(50px); /* Start off-screen */
+      animation: moveDown 1s forwards;
+      animation-delay: 1.5s; /* Delay the animation for smoother timing */
+    }
+
+    /* Animation to move the footer down */
+    @keyframes moveDown {
+      to {
+        opacity: 1;
+        transform: translateY(0); /* Move the footer to its original position */
+      }
+    }
+
+    /* Modal Styles */
+    /* Hidden by default */
+    .modal {
+      display: none; /* Hidden initially */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+      overflow: auto;
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Background Music Styling */
+    audio {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Music -->
+  <audio autoplay loop controls>
+    <source src="background-music.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">My Image Collection</div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Section -->
+  <section class="main-content">
+    <h1>Gallery</h1>
+    <p>Welcome to my collection of images. Explore the gallery below!</p>
+    <div class="image-grid" id="imageGrid">
+      <!-- Dynamic Image Items will be inserted here -->
+    </div>
+  </section>
+
+  <!-- Modal for Viewing Larger Image -->
+  <div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+  </div>
+
+  <script>
+    // Array of image file names
+    const images = [
+      "img1/LINE_ALBUM_231224_241223_1.jpg",
+      "img1/LINE_ALBUM_231224_241223_2.jpg",
+      "img1/LINE_ALBUM_231224_241223_3.jpg",
+      "img1/LINE_ALBUM_231224_241223_4.jpg",
+      "img1/LINE_ALBUM_231224_241223_5.jpg",
+      "img1/LINE_ALBUM_231224_241223_6.jpg",
+      "img1/LINE_ALBUM_231224_241223_7.jpg",
+      "img1/LINE_ALBUM_231224_241223_8.jpg",
+      "img1/LINE_ALBUM_231224_241223_9.jpg",
+      "img1/LINE_ALBUM_231224_241223_11.jpg",
+      "img1/LINE_ALBUM_231224_241223_12.jpg",
+      "img1/LINE_ALBUM_231224_241223_13.jpg",
+      "img1/LINE_ALBUM_231224_241223_14.jpg",
+      "img1/LINE_ALBUM_231224_241223_15.jpg",
+      "img1/LINE_ALBUM_231224_241223_16.jpg",
+      "img1/LINE_ALBUM_231224_241223_17.jpg",
+      "img1/LINE_ALBUM_231224_241223_18.jpg",
+      "img1/LINE_ALBUM_231224_241223_19.jpg",
+      "img1/LINE_ALBUM_231224_241223_20.jpg",
+      "img1/LINE_ALBUM_231224_241223_21.jpg",
+      "img1/LINE_ALBUM_231224_241223_22.jpg",
+      "img1/LINE_ALBUM_231224_241223_23.jpg",
+      "img1/LINE_ALBUM_231224_241223_24.jpg",
+      "img1/LINE_ALBUM_231224_241223_25.jpg",
+      "img1/LINE_ALBUM_231224_241223_26.jpg",
+      "img1/LINE_ALBUM_231224_241223_27.jpg", // Add more image filenames here
+      "img1/LINE_ALBUM_231224_241223_28.jpg",
+      "img1/LINE_ALBUM_231224_241223_29.jpg",
+      "img1/LINE_ALBUM_231224_241223_30.jpg",
+      "img1/LINE_ALBUM_231224_241223_31.jpg",
+      "img1/LINE_ALBUM_231224_241223_32.jpg",
+      "img1/LINE_ALBUM_231224_241223_33.jpg",
+      "img1/LINE_ALBUM_231224_241223_34.jpg",
+      "img1/LINE_ALBUM_231224_241223_35.jpg",
+      "img1/LINE_ALBUM_231224_241223_36.jpg",
+      "img1/LINE_ALBUM_231224_241223_37.jpg",
+      "img1/LINE_ALBUM_231224_241223_38.jpg",
+      "img1/LINE_ALBUM_231224_241223_39.jpg",
+      "img1/LINE_ALBUM_231224_241223_40.jpg",
+      "img1/LINE_ALBUM_231224_241223_41.jpg",
+      "img1/LINE_ALBUM_231224_241223_42.jpg",
+      "img1/LINE_ALBUM_231224_241223_43.jpg",
+      "img1/LINE_ALBUM_231224_241223_44.jpg",
+      "img1/LINE_ALBUM_231224_241223_45.jpg",
+      "img1/LINE_ALBUM_231224_241223_46.jpg",
+      "img1/LINE_ALBUM_231224_241223_47.jpg",
+      "img1/LINE_ALBUM_231224_241223_48.jpg",
+      "img1/LINE_ALBUM_231224_241223_49.jpg",
+      "img1/LINE_ALBUM_231224_241223_50.jpg",
+      "img1/LINE_ALBUM_231224_241223_51.jpg",
+    ];
+
+    // Function to add images dynamically
+    function loadImages() {
+      const imageGrid = document.getElementById("imageGrid");
+      
+      images.forEach(image => {
+        const imageItem = document.createElement("div");
+        imageItem.classList.add("image-item");
+        
+        const imgElement = document.createElement("img");
+        imgElement.src = image; // Assuming the images are in the same folder
+        imgElement.alt = image;
+
+        // Add click event to show image in modal
+        imgElement.onclick = function() {
+          openModal(image);
+        };
+
+        imageItem.appendChild(imgElement);
+        imageGrid.appendChild(imageItem);
+      });
+    }
+
+    // Function to open the modal with the clicked image
+    function openModal(imageSrc) {
+      const modal = document.getElementById("myModal");
+      const modalImage = document.getElementById("modalImage");
+      
+      modal.style.display = "block"; // Show the modal
+      modalImage.src = imageSrc; // Set the image source in the modal
+    }
+
+    // Function to close the modal
+    function closeModal() {
+      const modal = document.getElementById("myModal");
+      modal.style.display = "none"; // Hide the modal
+    }
+
+    // Call the function to load images when the page is loaded
+    window.onload = loadImages;
+  </script>
+  <!-- Video Section -->
+  <div class="video-container">
+    <video width="100%" controls>
+        <source src="img/Sequence 03.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+</body>
+</html>
