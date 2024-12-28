@@ -12,6 +12,45 @@
 	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<link href="style.css" rel="stylesheet">
+	<style>
+		/* Modal Background */
+		.modal {
+			display: none; /* Hidden by default */
+			position: fixed;
+			z-index: 1; /* Sit on top */
+			left: 0;
+			top: 0;
+			width: 100%; /* Full width */
+			height: 100%; /* Full height */
+			background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+		}
+
+		/* Modal Content */
+		.modal-content {
+			background-color: #fff;
+			margin: 10% auto; /* Center the modal */
+			padding: 20px;
+			border: 1px solid #888;
+			width: 70%;
+			max-width: 500px;
+			border-radius: 8px;
+		}
+
+		/* Close Button */
+		.close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+	</style>
 </head>
 <body>
 
@@ -31,7 +70,7 @@
 	</div>
 </nav>
 
-<!--- Image Slider -->
+<!-- Image Slider (same as your existing code) -->
 <div id="slides" class="carousel slide" data-ride="carousel" data-aos="fade-up"
 		data-aos-offset="200"
 		data-aos-delay="50"
@@ -58,7 +97,7 @@
 	</div>
 </div>
 
-<!--- Three Column Section -->
+<!-- Three Column Section (same as your existing code) -->
 <div class="container-fluid padding" data-aos="fade-up"
 		data-aos-offset="200"
 		data-aos-delay="50"
@@ -68,88 +107,88 @@
 			<i class="fas fa-male fa-5x"></i>
 			<h3>Personal</h3>
 			<p>I appreciate you</p>
-			<!-- Button updated with JavaScript for password validation -->
 			<button id="personalBtn" class="btn btn-primary">Go to Personal</button>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-4">
 			<i class="fas fa-users fa-5x"></i>
 			<h3>Family 1</h3>
 			<p>Thanks to your family for everything. I appreciate you all!</p>
-			<!-- Button updated with JavaScript for password validation -->
 			<button id="family1Btn" class="btn btn-primary">Go to Family 1</button>
 		</div>
 		<div class="col-xs-12 col-md-4">
 			<i class="fas fa-play fa-5x"></i>
 			<h3>Family 2</h3>
 			<p>Thanks to my family for everything. I appreciate you all!</p>
-			<!-- Button updated with JavaScript for password validation -->
 			<button id="family2Btn" class="btn btn-primary">Go to Family 2</button>
 		</div>
 	</div>
 	<hr class="my-4">
 </div>
 
-<hr class="my-4">
+<!-- Modal for Notice -->
+<div id="noticeModal" class="modal">
+	<div class="modal-content">
+		<span class="close" id="closeModal">&times;</span>
+		<h2>Important Notice</h2>
+		<p>This is an important message for all visitors !!</p>
+		<p>1. I recommend accessing the website through an iPad or notebook, as the window size is more appropriate.</p>
+		<p>2. When you access each section, if the song doesn't autoplay, I recommend pressing the play button to start the song.</p>
+		<p>3. Each section has a video.</p>
+		<p>As 2025 approaches or follows, I wish everyone a joyous and prosperous year.</p>
+	</div>
+</div>
 
-<!-- JavaScript for Password Authentication -->
+<!-- JavaScript for Password Authentication (same as your existing code) -->
 <script>
-    // Add an event listener to the "Go to Personal" button
-    document.getElementById('personalBtn').addEventListener('click', function() {
-        // Prompt user for password
-        var password = prompt('The anniversary date (A.D.):');
-        
-        // Define the correct password (replace 'yourPassword' with the actual password you want)
-        var correctPassword = '01012022'; // Update this password
+// Personal Button with Password Validation
+document.getElementById('personalBtn').addEventListener('click', function() {
+    var password = prompt('The anniversary date (A.D.):');
+    var correctPassword = '01012022'; 
+    if (password === correctPassword) {
+        window.location.href = 'personal.html';
+    } else {
+        alert('Incorrect password!');
+    }
+});
 
-        // Check if the entered password is correct
-        if (password === correctPassword) {
-            // Redirect to 'personal.html' if the password is correct
-            window.location.href = 'personal.html';
-        } else {
-            // Show an alert if the password is incorrect
-            alert('Incorrect password!');
-        }
-    });
-</script>
+// Family 1 Button with Password Validation
+document.getElementById('family1Btn').addEventListener('click', function() {
+    var password = prompt('Your birthday (A.D.):');
+    var correctPassword = '14062000'; 
+    if (password === correctPassword) {
+        window.location.href = 'family.html';
+    } else {
+        alert('Incorrect password!');
+    }
+});
 
-<script>
-    // Add an event listener to the "Go to Personal" button
-    document.getElementById('family1Btn').addEventListener('click', function() {
-        // Prompt user for password
-        var password = prompt('Your birthday (A.D.):');
-        
-        // Define the correct password (replace 'yourPassword' with the actual password you want)
-        var correctPassword = '14062000'; // Update this password
+// Family 2 Button with Password Validation
+document.getElementById('family2Btn').addEventListener('click', function() {
+    var password = prompt('The housewarming date (A.D.):');
+    var correctPassword = '06012006'; 
+    if (password === correctPassword) {
+        window.location.href = 'recap.html';
+    } else {
+        alert('Incorrect password!');
+    }
+});
 
-        // Check if the entered password is correct
-        if (password === correctPassword) {
-            // Redirect to 'personal.html' if the password is correct
-            window.location.href = 'family.html';
-        } else {
-            // Show an alert if the password is incorrect
-            alert('Incorrect password!');
-        }
-    });
-</script>
+// Show Modal on Page Load
+window.onload = function() {
+    document.getElementById('noticeModal').style.display = 'block';
+}
 
-<script>
-    // Add an event listener to the "Go to Personal" button
-    document.getElementById('family2Btn').addEventListener('click', function() {
-        // Prompt user for password
-        var password = prompt('The housewarming date (A.D.):');
-        
-        // Define the correct password (replace 'yourPassword' with the actual password you want)
-        var correctPassword = '06012006'; // Update this password
+// Close the Modal when Clicking the Close Button
+document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('noticeModal').style.display = 'none';
+});
 
-        // Check if the entered password is correct
-        if (password === correctPassword) {
-            // Redirect to 'personal.html' if the password is correct
-            window.location.href = 'recap.html';
-        } else {
-            // Show an alert if the password is incorrect
-            alert('Incorrect password!');
-        }
-    });
+// Close the Modal when Clicking Outside of the Modal Content
+window.onclick = function(event) {
+    if (event.target == document.getElementById('noticeModal')) {
+        document.getElementById('noticeModal').style.display = 'none';
+    }
+}
 </script>
 
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
